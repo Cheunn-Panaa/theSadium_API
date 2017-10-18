@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\UserLikesMedia" table="user_likes_media">
+    <indexes>
+      <index name="fk_user_has_media_media1_idx" columns="media_id"/>
+      <index name="fk_user_has_media_user1_idx" columns="user_id"/>
+    </indexes>
+    <field name="userId" type="integer" column="user_id" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="mediaId" type="integer" column="media_id" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="creationDate" type="datetime" column="creation_date" nullable="false"/>
+  </entity>
+</doctrine-mapping>

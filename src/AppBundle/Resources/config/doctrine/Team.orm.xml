@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\Team" table="team">
+    <indexes>
+      <index name="fk_team_sexe1_idx" columns="sexe_id"/>
+      <index name="fk_team_category1_idx" columns="category_id"/>
+      <index name="fk_team_division1_idx" columns="division_id"/>
+      <index name="fk_team_season1_idx" columns="season_id"/>
+      <index name="fk_team_club1_idx" columns="club_id"/>
+    </indexes>
+    <field name="id" type="integer" column="id" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="sexeId" type="integer" column="sexe_id" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="categoryId" type="integer" column="category_id" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="divisionId" type="integer" column="division_id" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="seasonId" type="integer" column="season_id" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="clubId" type="integer" column="club_id" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>

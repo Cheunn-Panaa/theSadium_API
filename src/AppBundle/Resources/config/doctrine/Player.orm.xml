@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\Player" table="player">
+    <indexes>
+      <index name="fk_player_Position1_idx" columns="position_id"/>
+      <index name="fk_player_user1_idx" columns="user_id"/>
+    </indexes>
+    <field name="userId" type="integer" column="user_id" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="height" type="decimal" column="height" precision="3" scale="2" nullable="true"/>
+    <field name="weight" type="decimal" column="weight" precision="5" scale="2" nullable="true"/>
+    <field name="goalsNbr" type="integer" column="goals_nbr" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="passNbr" type="integer" column="pass_nbr" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="birthdate" type="date" column="birthdate" nullable="false"/>
+    <field name="positionId" type="integer" column="position_id" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>
