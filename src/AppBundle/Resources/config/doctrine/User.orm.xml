@@ -4,11 +4,9 @@
     <indexes>
       <index name="fk_user_sexe_idx" columns="sexe_id"/>
     </indexes>
-    <field name="id" type="integer" column="id" nullable="false">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
     <field name="firstname" type="string" column="firstname" length="255" nullable="false">
       <options>
         <option name="fixed"/>
@@ -41,11 +39,6 @@
         <option name="unsigned"/>
       </options>
     </field>
-    <field name="sexeId" type="integer" column="sexe_id" nullable="false">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
     <field name="loginProvider" type="string" column="login_provider" length="255" nullable="true">
       <options>
         <option name="fixed"/>
@@ -67,5 +60,21 @@
       </options>
     </field>
     <field name="lastLogin" type="datetime" column="last_login" nullable="false"/>
+    <many-to-one field="sexe" target-entity="Sexe" fetch="LAZY">
+      <join-columns>
+        <join-column name="sexe_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-many field="playerFollow" target-entity="Player" inversed-by="userFollow" fetch="LAZY">
+      <join-table name="user_follows_player">
+        <join-columns>
+          <join-column name="user_follow_id" referenced-column-name="id"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="player_follow_id" referenced-column-name="user_id"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+    <many-to-many field="postShare" target-entity="Post" mapped-by="userShare" fetch="LAZY"/>
   </entity>
 </doctrine-mapping>

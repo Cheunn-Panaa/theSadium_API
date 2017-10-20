@@ -13,13 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Comments
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     */
-    private $id;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="contenu", type="string", length=255, nullable=false)
@@ -36,137 +29,32 @@ class Comments
     /**
      * @var integer
      *
-     * @ORM\Column(name="user_id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $userId;
+    private $id;
 
     /**
-     * @var integer
+     * @var \AppBundle\Entity\Post
      *
-     * @ORM\Column(name="post_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Post")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="post_id", referencedColumnName="id")
+     * })
      */
-    private $postId;
-
-
+    private $post;
 
     /**
-     * Get the value of Id
+     * @var \AppBundle\Entity\User
      *
-     * @return integer
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
      */
-    public function getId()
-    {
-        return $this->id;
-    }
+    private $user;
 
-    /**
-     * Set the value of Id
-     *
-     * @param integer id
-     *
-     * @return self
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Contenu
-     *
-     * @return string
-     */
-    public function getContenu()
-    {
-        return $this->contenu;
-    }
-
-    /**
-     * Set the value of Contenu
-     *
-     * @param string contenu
-     *
-     * @return self
-     */
-    public function setContenu($contenu)
-    {
-        $this->contenu = $contenu;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Creation Date
-     *
-     * @return \DateTime
-     */
-    public function getCreationDate()
-    {
-        return $this->creationDate;
-    }
-
-    /**
-     * Set the value of Creation Date
-     *
-     * @param \DateTime creationDate
-     *
-     * @return self
-     */
-    public function setCreationDate(\DateTime $creationDate)
-    {
-        $this->creationDate = $creationDate;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of User Id
-     *
-     * @return integer
-     */
-    public function getUserId()
-    {
-        return $this->userId;
-    }
-
-    /**
-     * Set the value of User Id
-     *
-     * @param integer userId
-     *
-     * @return self
-     */
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Post Id
-     *
-     * @return integer
-     */
-    public function getPostId()
-    {
-        return $this->postId;
-    }
-
-    /**
-     * Set the value of Post Id
-     *
-     * @param integer postId
-     *
-     * @return self
-     */
-    public function setPostId($postId)
-    {
-        $this->postId = $postId;
-
-        return $this;
-    }
 
 }
+

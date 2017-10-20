@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\UserLikeTeam" table="user_like_team">
+    <indexes>
+      <index name="fk_user_like_has_team_team1_idx" columns="team_id"/>
+      <index name="fk_user_like_has_team_user_like1_idx" columns="user_like_id"/>
+    </indexes>
+    <id name="userLike" association-key="true"/>
+    <one-to-one field="userLike" target-entity="UserLike" fetch="LAZY">
+      <join-columns>
+        <join-column name="user_like_id" referenced-column-name="id"/>
+      </join-columns>
+    </one-to-one>
+    <many-to-one field="team" target-entity="Team" fetch="LAZY">
+      <join-columns>
+        <join-column name="team_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

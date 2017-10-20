@@ -13,13 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Media
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     */
-    private $id;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="path", type="string", length=255, nullable=false)
@@ -43,130 +36,22 @@ class Media
     /**
      * @var integer
      *
-     * @ORM\Column(name="post_id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $postId;
-
-
+    private $id;
 
     /**
-     * Get the value of Id
+     * @var \AppBundle\Entity\Post
      *
-     * @return integer
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Post")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="post_id", referencedColumnName="id")
+     * })
      */
-    public function getId()
-    {
-        return $this->id;
-    }
+    private $post;
 
-    /**
-     * Set the value of Id
-     *
-     * @param integer id
-     *
-     * @return self
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Path
-     *
-     * @return string
-     */
-    public function getPath()
-    {
-        return $this->path;
-    }
-
-    /**
-     * Set the value of Path
-     *
-     * @param string path
-     *
-     * @return self
-     */
-    public function setPath($path)
-    {
-        $this->path = $path;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * Set the value of Title
-     *
-     * @param string title
-     *
-     * @return self
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Main Media
-     *
-     * @return boolean
-     */
-    public function getMainMedia()
-    {
-        return $this->mainMedia;
-    }
-
-    /**
-     * Set the value of Main Media
-     *
-     * @param boolean mainMedia
-     *
-     * @return self
-     */
-    public function setMainMedia($mainMedia)
-    {
-        $this->mainMedia = $mainMedia;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Post Id
-     *
-     * @return integer
-     */
-    public function getPostId()
-    {
-        return $this->postId;
-    }
-
-    /**
-     * Set the value of Post Id
-     *
-     * @param integer postId
-     *
-     * @return self
-     */
-    public function setPostId($postId)
-    {
-        $this->postId = $postId;
-
-        return $this;
-    }
 
 }
+

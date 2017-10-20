@@ -13,13 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 class User
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     */
-    private $id;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="firstname", type="string", length=255, nullable=false)
@@ -76,13 +69,6 @@ class User
     private $type;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="sexe_id", type="integer", nullable=false)
-     */
-    private $sexeId;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="login_provider", type="string", length=255, nullable=true)
@@ -117,367 +103,55 @@ class User
      */
     private $lastLogin;
 
-
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
 
     /**
-     * Get the value of Id
+     * @var \AppBundle\Entity\Sexe
      *
-     * @return integer
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Sexe")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="sexe_id", referencedColumnName="id")
+     * })
      */
-    public function getId()
-    {
-        return $this->id;
-    }
+    private $sexe;
 
     /**
-     * Set the value of Id
+     * @var \Doctrine\Common\Collections\Collection
      *
-     * @param integer id
-     *
-     * @return self
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Player", inversedBy="userFollow")
+     * @ORM\JoinTable(name="user_follows_player",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="user_follow_id", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="player_follow_id", referencedColumnName="user_id")
+     *   }
+     * )
      */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
+    private $playerFollow;
 
     /**
-     * Get the value of Firstname
+     * @var \Doctrine\Common\Collections\Collection
      *
-     * @return string
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Post", mappedBy="userShare")
      */
-    public function getFirstname()
-    {
-        return $this->firstname;
-    }
+    private $postShare;
 
     /**
-     * Set the value of Firstname
-     *
-     * @param string firstname
-     *
-     * @return self
+     * Constructor
      */
-    public function setFirstname($firstname)
+    public function __construct()
     {
-        $this->firstname = $firstname;
-
-        return $this;
+        $this->playerFollow = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->postShare = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
-    /**
-     * Get the value of Lastname
-     *
-     * @return string
-     */
-    public function getLastname()
-    {
-        return $this->lastname;
-    }
-
-    /**
-     * Set the value of Lastname
-     *
-     * @param string lastname
-     *
-     * @return self
-     */
-    public function setLastname($lastname)
-    {
-        $this->lastname = $lastname;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Birthdate
-     *
-     * @return \DateTime
-     */
-    public function getBirthdate()
-    {
-        return $this->birthdate;
-    }
-
-    /**
-     * Set the value of Birthdate
-     *
-     * @param \DateTime birthdate
-     *
-     * @return self
-     */
-    public function setBirthdate(\DateTime $birthdate)
-    {
-        $this->birthdate = $birthdate;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Profile Picture
-     *
-     * @return string
-     */
-    public function getProfilePicture()
-    {
-        return $this->profilePicture;
-    }
-
-    /**
-     * Set the value of Profile Picture
-     *
-     * @param string profilePicture
-     *
-     * @return self
-     */
-    public function setProfilePicture($profilePicture)
-    {
-        $this->profilePicture = $profilePicture;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Password
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * Set the value of Password
-     *
-     * @param string password
-     *
-     * @return self
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Email
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Set the value of Email
-     *
-     * @param string email
-     *
-     * @return self
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Creation Date
-     *
-     * @return \DateTime
-     */
-    public function getCreationDate()
-    {
-        return $this->creationDate;
-    }
-
-    /**
-     * Set the value of Creation Date
-     *
-     * @param \DateTime creationDate
-     *
-     * @return self
-     */
-    public function setCreationDate(\DateTime $creationDate)
-    {
-        $this->creationDate = $creationDate;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Type
-     *
-     * @return integer
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * Set the value of Type
-     *
-     * @param integer type
-     *
-     * @return self
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Sexe Id
-     *
-     * @return integer
-     */
-    public function getSexeId()
-    {
-        return $this->sexeId;
-    }
-
-    /**
-     * Set the value of Sexe Id
-     *
-     * @param integer sexeId
-     *
-     * @return self
-     */
-    public function setSexeId($sexeId)
-    {
-        $this->sexeId = $sexeId;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Login Provider
-     *
-     * @return string
-     */
-    public function getLoginProvider()
-    {
-        return $this->loginProvider;
-    }
-
-    /**
-     * Set the value of Login Provider
-     *
-     * @param string loginProvider
-     *
-     * @return self
-     */
-    public function setLoginProvider($loginProvider)
-    {
-        $this->loginProvider = $loginProvider;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Token
-     *
-     * @return string
-     */
-    public function getToken()
-    {
-        return $this->token;
-    }
-
-    /**
-     * Set the value of Token
-     *
-     * @param string token
-     *
-     * @return self
-     */
-    public function setToken($token)
-    {
-        $this->token = $token;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Private Token
-     *
-     * @return string
-     */
-    public function getPrivateToken()
-    {
-        return $this->privateToken;
-    }
-
-    /**
-     * Set the value of Private Token
-     *
-     * @param string privateToken
-     *
-     * @return self
-     */
-    public function setPrivateToken($privateToken)
-    {
-        $this->privateToken = $privateToken;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Unique Id
-     *
-     * @return string
-     */
-    public function getUniqueId()
-    {
-        return $this->uniqueId;
-    }
-
-    /**
-     * Set the value of Unique Id
-     *
-     * @param string uniqueId
-     *
-     * @return self
-     */
-    public function setUniqueId($uniqueId)
-    {
-        $this->uniqueId = $uniqueId;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Last Login
-     *
-     * @return \DateTime
-     */
-    public function getLastLogin()
-    {
-        return $this->lastLogin;
-    }
-
-    /**
-     * Set the value of Last Login
-     *
-     * @param \DateTime lastLogin
-     *
-     * @return self
-     */
-    public function setLastLogin(\DateTime $lastLogin)
-    {
-        $this->lastLogin = $lastLogin;
-
-        return $this;
-    }
-
 
 }
+

@@ -13,13 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Post
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     */
-    private $id;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=false)
@@ -57,240 +50,64 @@ class Post
     /**
      * @var integer
      *
-     * @ORM\Column(name="post_type_id", type="integer", nullable=true)
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $postTypeId;
+    private $id;
 
     /**
-     * @var integer
+     * @var \AppBundle\Entity\PostType
      *
-     * @ORM\Column(name="user_id", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\PostType")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="post_type_id", referencedColumnName="id")
+     * })
      */
-    private $userId;
+    private $postType;
 
     /**
-     * @var integer
+     * @var \AppBundle\Entity\Team
      *
-     * @ORM\Column(name="team_id", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Team")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="team_id", referencedColumnName="id")
+     * })
      */
-    private $teamId;
-
-
+    private $team;
 
     /**
-     * Get the value of Id
+     * @var \AppBundle\Entity\User
      *
-     * @return integer
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
      */
-    public function getId()
+    private $user;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", inversedBy="postShare")
+     * @ORM\JoinTable(name="user_shares_post",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="post_share_id", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="user_share_id", referencedColumnName="id")
+     *   }
+     * )
+     */
+    private $userShare;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
     {
-        return $this->id;
-    }
-
-    /**
-     * Set the value of Id
-     *
-     * @param integer id
-     *
-     * @return self
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * Set the value of Title
-     *
-     * @param string title
-     *
-     * @return self
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Creation Date
-     *
-     * @return \DateTime
-     */
-    public function getCreationDate()
-    {
-        return $this->creationDate;
-    }
-
-    /**
-     * Set the value of Creation Date
-     *
-     * @param \DateTime creationDate
-     *
-     * @return self
-     */
-    public function setCreationDate(\DateTime $creationDate)
-    {
-        $this->creationDate = $creationDate;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Content
-     *
-     * @return string
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    /**
-     * Set the value of Content
-     *
-     * @param string content
-     *
-     * @return self
-     */
-    public function setContent($content)
-    {
-        $this->content = $content;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Goals Nbr
-     *
-     * @return integer
-     */
-    public function getGoalsNbr()
-    {
-        return $this->goalsNbr;
-    }
-
-    /**
-     * Set the value of Goals Nbr
-     *
-     * @param integer goalsNbr
-     *
-     * @return self
-     */
-    public function setGoalsNbr($goalsNbr)
-    {
-        $this->goalsNbr = $goalsNbr;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Pass Nbr
-     *
-     * @return integer
-     */
-    public function getPassNbr()
-    {
-        return $this->passNbr;
-    }
-
-    /**
-     * Set the value of Pass Nbr
-     *
-     * @param integer passNbr
-     *
-     * @return self
-     */
-    public function setPassNbr($passNbr)
-    {
-        $this->passNbr = $passNbr;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Post Type Id
-     *
-     * @return integer
-     */
-    public function getPostTypeId()
-    {
-        return $this->postTypeId;
-    }
-
-    /**
-     * Set the value of Post Type Id
-     *
-     * @param integer postTypeId
-     *
-     * @return self
-     */
-    public function setPostTypeId($postTypeId)
-    {
-        $this->postTypeId = $postTypeId;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of User Id
-     *
-     * @return integer
-     */
-    public function getUserId()
-    {
-        return $this->userId;
-    }
-
-    /**
-     * Set the value of User Id
-     *
-     * @param integer userId
-     *
-     * @return self
-     */
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Team Id
-     *
-     * @return integer
-     */
-    public function getTeamId()
-    {
-        return $this->teamId;
-    }
-
-    /**
-     * Set the value of Team Id
-     *
-     * @param integer teamId
-     *
-     * @return self
-     */
-    public function setTeamId($teamId)
-    {
-        $this->teamId = $teamId;
-
-        return $this;
+        $this->userShare = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 }
+

@@ -6,11 +6,9 @@
       <index name="fk_post_user1_idx" columns="user_id"/>
       <index name="fk_post_team1_idx" columns="team_id"/>
     </indexes>
-    <field name="id" type="integer" column="id" nullable="false">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
     <field name="title" type="string" column="title" length="255" nullable="false">
       <options>
         <option name="fixed"/>
@@ -32,20 +30,30 @@
         <option name="unsigned"/>
       </options>
     </field>
-    <field name="postTypeId" type="integer" column="post_type_id" nullable="true">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
-    <field name="userId" type="integer" column="user_id" nullable="true">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
-    <field name="teamId" type="integer" column="team_id" nullable="true">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
+    <many-to-one field="postType" target-entity="PostType" fetch="LAZY">
+      <join-columns>
+        <join-column name="post_type_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="team" target-entity="Team" fetch="LAZY">
+      <join-columns>
+        <join-column name="team_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="user" target-entity="User" fetch="LAZY">
+      <join-columns>
+        <join-column name="user_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-many field="userShare" target-entity="User" inversed-by="postShare" fetch="LAZY">
+      <join-table name="user_shares_post">
+        <join-columns>
+          <join-column name="post_share_id" referenced-column-name="id"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="user_share_id" referenced-column-name="id"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
   </entity>
 </doctrine-mapping>

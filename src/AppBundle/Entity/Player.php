@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\User;
 
 /**
  * Player
@@ -10,15 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="player", indexes={@ORM\Index(name="fk_player_Position1_idx", columns={"position_id"}), @ORM\Index(name="fk_player_user1_idx", columns={"user_id"})})
  * @ORM\Entity
  */
-class Player
+class Player extends User
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="user_id", type="integer", nullable=false)
-     */
-    private $userId;
-
     /**
      * @var string
      *
@@ -55,180 +49,40 @@ class Player
     private $birthdate;
 
     /**
-     * @var integer
+     * @var \AppBundle\Entity\User
      *
-     * @ORM\Column(name="position_id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
      */
-    private $positionId;
-
-
+    private $user;
 
     /**
-     * Get the value of User Id
+     * @var \AppBundle\Entity\Position
      *
-     * @return integer
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Position")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="position_id", referencedColumnName="id")
+     * })
      */
-    public function getUserId()
-    {
-        return $this->userId;
-    }
+    private $position;
 
     /**
-     * Set the value of User Id
+     * @var \Doctrine\Common\Collections\Collection
      *
-     * @param integer userId
-     *
-     * @return self
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", mappedBy="playerFollow")
      */
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
-
-        return $this;
-    }
+    private $userFollow;
 
     /**
-     * Get the value of Height
-     *
-     * @return string
+     * Constructor
      */
-    public function getHeight()
+    public function __construct()
     {
-        return $this->height;
-    }
-
-    /**
-     * Set the value of Height
-     *
-     * @param string height
-     *
-     * @return self
-     */
-    public function setHeight($height)
-    {
-        $this->height = $height;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Weight
-     *
-     * @return string
-     */
-    public function getWeight()
-    {
-        return $this->weight;
-    }
-
-    /**
-     * Set the value of Weight
-     *
-     * @param string weight
-     *
-     * @return self
-     */
-    public function setWeight($weight)
-    {
-        $this->weight = $weight;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Goals Nbr
-     *
-     * @return integer
-     */
-    public function getGoalsNbr()
-    {
-        return $this->goalsNbr;
-    }
-
-    /**
-     * Set the value of Goals Nbr
-     *
-     * @param integer goalsNbr
-     *
-     * @return self
-     */
-    public function setGoalsNbr($goalsNbr)
-    {
-        $this->goalsNbr = $goalsNbr;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Pass Nbr
-     *
-     * @return integer
-     */
-    public function getPassNbr()
-    {
-        return $this->passNbr;
-    }
-
-    /**
-     * Set the value of Pass Nbr
-     *
-     * @param integer passNbr
-     *
-     * @return self
-     */
-    public function setPassNbr($passNbr)
-    {
-        $this->passNbr = $passNbr;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Birthdate
-     *
-     * @return \DateTime
-     */
-    public function getBirthdate()
-    {
-        return $this->birthdate;
-    }
-
-    /**
-     * Set the value of Birthdate
-     *
-     * @param \DateTime birthdate
-     *
-     * @return self
-     */
-    public function setBirthdate(\DateTime $birthdate)
-    {
-        $this->birthdate = $birthdate;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Position Id
-     *
-     * @return integer
-     */
-    public function getPositionId()
-    {
-        return $this->positionId;
-    }
-
-    /**
-     * Set the value of Position Id
-     *
-     * @param integer positionId
-     *
-     * @return self
-     */
-    public function setPositionId($positionId)
-    {
-        $this->positionId = $positionId;
-
-        return $this;
+        $this->userFollow = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 }

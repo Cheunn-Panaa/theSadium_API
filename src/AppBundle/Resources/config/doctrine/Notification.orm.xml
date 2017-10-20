@@ -4,11 +4,9 @@
     <indexes>
       <index name="fk_notification_user1_idx" columns="user_id"/>
     </indexes>
-    <field name="id" type="integer" column="id" nullable="false">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
     <field name="title" type="string" column="title" length="255" nullable="false">
       <options>
         <option name="fixed"/>
@@ -25,10 +23,10 @@
       </options>
     </field>
     <field name="vue" type="boolean" column="vue" nullable="false"/>
-    <field name="userId" type="integer" column="user_id" nullable="false">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
+    <many-to-one field="user" target-entity="User" fetch="LAZY">
+      <join-columns>
+        <join-column name="user_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
   </entity>
 </doctrine-mapping>

@@ -13,20 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 class TeamHasUser
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="team_id", type="integer", nullable=false)
-     */
-    private $teamId;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="user_id", type="integer", nullable=false)
-     */
-    private $userId;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="start_date", type="date", nullable=false)
@@ -43,9 +29,41 @@ class TeamHasUser
     /**
      * @var integer
      *
-     * @ORM\Column(name="status_id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $statusId;
+    private $id;
+
+    /**
+     * @var \AppBundle\Entity\Status
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Status")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="status_id", referencedColumnName="id")
+     * })
+     */
+    private $status;
+
+    /**
+     * @var \AppBundle\Entity\Team
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Team")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="team_id", referencedColumnName="id")
+     * })
+     */
+    private $team;
+
+    /**
+     * @var \AppBundle\Entity\User
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
+     */
+    private $user;
 
 
 }

@@ -5,11 +5,7 @@
       <index name="fk_player_Position1_idx" columns="position_id"/>
       <index name="fk_player_user1_idx" columns="user_id"/>
     </indexes>
-    <field name="userId" type="integer" column="user_id" nullable="false">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
+    <id name="user" association-key="true"/>
     <field name="height" type="decimal" column="height" precision="3" scale="2" nullable="true"/>
     <field name="weight" type="decimal" column="weight" precision="5" scale="2" nullable="true"/>
     <field name="goalsNbr" type="integer" column="goals_nbr" nullable="true">
@@ -23,10 +19,16 @@
       </options>
     </field>
     <field name="birthdate" type="date" column="birthdate" nullable="false"/>
-    <field name="positionId" type="integer" column="position_id" nullable="false">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
+    <one-to-one field="user" target-entity="User" fetch="LAZY">
+      <join-columns>
+        <join-column name="user_id" referenced-column-name="id"/>
+      </join-columns>
+    </one-to-one>
+    <many-to-one field="position" target-entity="Position" fetch="LAZY">
+      <join-columns>
+        <join-column name="position_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-many field="userFollow" target-entity="User" mapped-by="playerFollow" fetch="LAZY"/>
   </entity>
 </doctrine-mapping>

@@ -4,11 +4,9 @@
     <indexes>
       <index name="fk_media_post1_idx" columns="post_id"/>
     </indexes>
-    <field name="id" type="integer" column="id" nullable="false">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
     <field name="path" type="string" column="path" length="255" nullable="false">
       <options>
         <option name="fixed"/>
@@ -20,10 +18,10 @@
       </options>
     </field>
     <field name="mainMedia" type="boolean" column="main_media" nullable="false"/>
-    <field name="postId" type="integer" column="post_id" nullable="false">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
+    <many-to-one field="post" target-entity="Post" fetch="LAZY">
+      <join-columns>
+        <join-column name="post_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
   </entity>
 </doctrine-mapping>

@@ -15,189 +15,62 @@ class Team
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @var integer
+     * @var \AppBundle\Entity\Category
      *
-     * @ORM\Column(name="sexe_id", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * })
      */
-    private $sexeId;
+    private $category;
 
     /**
-     * @var integer
+     * @var \AppBundle\Entity\Club
      *
-     * @ORM\Column(name="category_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Club")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="club_id", referencedColumnName="id")
+     * })
      */
-    private $categoryId;
+    private $club;
 
     /**
-     * @var integer
+     * @var \AppBundle\Entity\Division
      *
-     * @ORM\Column(name="division_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Division")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="division_id", referencedColumnName="id")
+     * })
      */
-    private $divisionId;
+    private $division;
 
     /**
-     * @var integer
+     * @var \AppBundle\Entity\Season
      *
-     * @ORM\Column(name="season_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Season")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="season_id", referencedColumnName="id")
+     * })
      */
-    private $seasonId;
+    private $season;
 
     /**
-     * @var integer
+     * @var \AppBundle\Entity\Sexe
      *
-     * @ORM\Column(name="club_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Sexe")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="sexe_id", referencedColumnName="id")
+     * })
      */
-    private $clubId;
+    private $sexe;
 
-
-
-    /**
-     * Get the value of Id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set the value of Id
-     *
-     * @param integer id
-     *
-     * @return self
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Sexe Id
-     *
-     * @return integer
-     */
-    public function getSexeId()
-    {
-        return $this->sexeId;
-    }
-
-    /**
-     * Set the value of Sexe Id
-     *
-     * @param integer sexeId
-     *
-     * @return self
-     */
-    public function setSexeId($sexeId)
-    {
-        $this->sexeId = $sexeId;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Category Id
-     *
-     * @return integer
-     */
-    public function getCategoryId()
-    {
-        return $this->categoryId;
-    }
-
-    /**
-     * Set the value of Category Id
-     *
-     * @param integer categoryId
-     *
-     * @return self
-     */
-    public function setCategoryId($categoryId)
-    {
-        $this->categoryId = $categoryId;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Division Id
-     *
-     * @return integer
-     */
-    public function getDivisionId()
-    {
-        return $this->divisionId;
-    }
-
-    /**
-     * Set the value of Division Id
-     *
-     * @param integer divisionId
-     *
-     * @return self
-     */
-    public function setDivisionId($divisionId)
-    {
-        $this->divisionId = $divisionId;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Season Id
-     *
-     * @return integer
-     */
-    public function getSeasonId()
-    {
-        return $this->seasonId;
-    }
-
-    /**
-     * Set the value of Season Id
-     *
-     * @param integer seasonId
-     *
-     * @return self
-     */
-    public function setSeasonId($seasonId)
-    {
-        $this->seasonId = $seasonId;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Club Id
-     *
-     * @return integer
-     */
-    public function getClubId()
-    {
-        return $this->clubId;
-    }
-
-    /**
-     * Set the value of Club Id
-     *
-     * @param integer clubId
-     *
-     * @return self
-     */
-    public function setClubId($clubId)
-    {
-        $this->clubId = $clubId;
-
-        return $this;
-    }
 
 }
+
